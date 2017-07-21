@@ -220,6 +220,73 @@ func (cs *StarterClient) StartExistingWorkspace(ctx context.Context, workspaceNa
 	return &workspaceResp, nil
 }
 
+// GetCheServerState get the state of che server
+func (cs *StarterClient) GetCheServerState(ctx context.Context) (*CheServerStateResponse, error) {
+	req, err := http.NewRequest("GET", cs.targetURL("server"), nil)
+	if err != nil {
+		return nil, err
+	}
+	cs.setHeaders(ctx, req)
+
+	if log.IsDebug() {
+		b, _ := httputil.DumpRequest(req, true)
+		log.Debug(ctx, map[string]interface{}{
+			"request": string(b),
+		}, "request object")
+	}
+
+	resp, err := cs.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+
+	cheServerStateResponse := CheServerStateResponse{}
+	err = json.NewDecoder(resp.Body).Decode(&cheServerStateResponse)
+	if err != nil {
+		log.Error(ctx, map[string]interface{}{
+			"err": err,
+		}, "failed to decode response from starting an existing workspace for repository")
+		return nil, err
+	}
+	return &cheServerStateResponse, nil
+}
+
+// StartCheServer start che server if idled
+func (cs *StarterClient) StartCheServer(ctx context.Context) (*CheServerStateResponse, error) {
+	req, err := http.NewRequest("PATCH", cs.targetURL("server"), nil)
+	if err != nil {
+		return nil, err
+	}
+	cs.setHeaders(ctx, req)
+
+	if log.IsDebug() {
+		b, _ := httputil.DumpRequest(req, true)
+		log.Debug(ctx, map[string]interface{}{
+			"request": string(b),
+		}, "request object")
+	}
+
+	resp, err := cs.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+
+	cheServerStateResponse := CheServerStateResponse{}
+	err = json.NewDecoder(resp.Body).Decode(&cheServerStateResponse)
+	if err != nil {
+		log.Error(ctx, map[string]interface{}{
+			"err": err,
+		}, "failed to decode response from starting an existing workspace for repository")
+		return nil, err
+	}
+	return &cheServerStateResponse, nil
+}
+
+
 // WorkspaceRequest represents a create workspace request body
 type WorkspaceRequest struct {
 	//ID          string `json:"id,omitempty"`
@@ -264,6 +331,26 @@ type WorkspaceLink struct {
 	HRef   string `json:"href"`
 	Method string `json:"method"`
 	Rel    string `json:"rel"`
+}
+
+type CheServerStateResponse struct {
+	Running bool `json:"running"`
+}
+
+// ServerLink represents a URL for the location of a workspace e.g.
+// "href":"http://che-starter-dsaas-preview.b6ff.rh-idev.openshiftapps.com:80/server"
+// "method":"GET"
+// "rel":"server status url"
+type CheServerLink struct {
+	HRef   string `json:"href"`
+	Method string `json:"method"`
+	Rel    string `json:"rel"`
+}
+
+// ServerState represents state of a che server (running / not running)
+type CheServerState struct {
+	Links   []CheServerLink `json:"links,omitempty`
+	Running bool            `json:"running"`
 }
 
 // WorkspaceError represent an error comming from the che-starter service
