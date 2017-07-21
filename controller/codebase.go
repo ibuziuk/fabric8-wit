@@ -293,6 +293,11 @@ func ConvertCodebase(request *goa.RequestData, codebase *codebase.Codebase, addi
 	return i
 }
 
+// Test endpoint that always return "OK"
+func (c *CodebaseController) Test(ctx *app.TestCodebaseContext) error {
+	return ctx.OK([]byte("ok"))
+}
+
 // TODO: We need to dynamically get the real che namespace name from the tenant namespace from
 // somewhere more sensible then the token/generate/guess route.
 func getNamespace(ctx context.Context) string {

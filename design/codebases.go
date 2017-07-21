@@ -179,6 +179,13 @@ var _ = a.Resource("codebase", func() {
 		a.Response(d.NotFound, JSONAPIErrors)
 		a.Response(d.Unauthorized, JSONAPIErrors)
 	})
+	a.Action("test", func() {
+		a.Routing(
+			a.GET("/test"),
+		)
+		a.Description("Test endpoint")
+		a.Response(d.OK, "text/plain")
+	})
 })
 
 // new version of "list" for migration
