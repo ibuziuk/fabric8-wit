@@ -83,6 +83,12 @@ var workspaceOpenLinks = a.Type("WorkspaceOpenLinks", func() {
 	a.Attribute("open", d.String)
 })
 
+var cheServerLinks = a.Type("CheServerLinks", func() {
+	a.Attribute("href", d.String)
+	a.Attribute("method", d.String)
+	a.Attribute("rel", d.String)
+})
+
 var codebaseList = JSONList(
 	"Codebase", "Holds the list of codebases",
 	codebase,
@@ -105,6 +111,19 @@ var workspaceOpen = a.MediaType("application/vnd.workspaceopen+json", func() {
 	a.Description(`JSONAPI store for the links of a workspace.  See also http://jsonapi.org/format/#document-resource-object`)
 	a.Attribute("links", workspaceOpenLinks)
 	a.View("default", func() {
+		a.Attribute("links")
+	})
+})
+
+var cheServerState = a.MediaType("CheServerState", func() {
+	a.TypeName("CheServerState")
+	a.Description(`JSONAPI store Che Server state.  See also http://jsonapi.org/format/#document-resource-object`)
+	a.Attributes(func() {
+		a.Attribute("running", d.Boolean, "Che server state")
+		a.Attribute("links", cheServerLinks)
+	})
+	a.View("default", func() {
+		a.Attribute("running")
 		a.Attribute("links")
 	})
 })
@@ -185,6 +204,19 @@ var _ = a.Resource("codebase", func() {
 		)
 		a.Description("Test endpoint")
 		a.Response(d.OK, "text/plain")
+	})
+	a.Action("chestate", func() {
+		a.Routing(
+			a.GET("/che/state"),
+		)
+		a.Description("Get Che Server state")
+		a.Response(d.OK, func() {
+			a.Media(cheServerState)
+		})
+		a.Response(d.BadRequest, JSONAPIErrors)
+		a.Response(d.InternalServerError, JSONAPIErrors)
+		a.Response(d.NotFound, JSONAPIErrors)
+		a.Response(d.Unauthorized, JSONAPIErrors)
 	})
 })
 

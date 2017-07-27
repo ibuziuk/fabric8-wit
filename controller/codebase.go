@@ -298,6 +298,14 @@ func (c *CodebaseController) Test(ctx *app.TestCodebaseContext) error {
 	return ctx.OK([]byte("ok"))
 }
 
+func (c *CodebaseController) Chestate(ctx *app.ChestateCodebaseContext) error {
+	isRunning := true
+	state := app.CheServerState{
+		Running: &isRunning,
+	}
+	return ctx.OK(&state);
+}
+
 // TODO: We need to dynamically get the real che namespace name from the tenant namespace from
 // somewhere more sensible then the token/generate/guess route.
 func getNamespace(ctx context.Context) string {
@@ -307,4 +315,8 @@ func getNamespace(ctx context.Context) string {
 		return strings.Replace(strings.Split(email, "@")[0], ".", "-", -1) + "-che"
 	}
 	return ""
+}
+
+func p(s string) *string {
+	return &s
 }
