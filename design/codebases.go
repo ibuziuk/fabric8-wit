@@ -206,6 +206,7 @@ var _ = a.Resource("codebase", func() {
 		a.Response(d.OK, "text/plain")
 	})
 	a.Action("chestate", func() {
+		a.Security("jwt")
 		a.Routing(
 			a.GET("/che/state"),
 		)

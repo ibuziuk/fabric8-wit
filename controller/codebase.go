@@ -299,6 +299,20 @@ func (c *CodebaseController) Test(ctx *app.TestCodebaseContext) error {
 }
 
 func (c *CodebaseController) Chestate(ctx *app.ChestateCodebaseContext) error {
+	fmt.Println("Che Master URL");
+	fmt.Println(c.config.GetCheStarterURL());
+	fmt.Println("OpenShiftTenat Master URL");
+	fmt.Println(c.config.GetOpenshiftTenantMasterURL())
+	fmt.Println("NameSpace")
+	namespace := "test"
+
+	cheClient := che.NewStarterClient(c.config.GetCheStarterURL(), c.config.GetOpenshiftTenantMasterURL(), namespace);
+	che, err := cheClient.GetCheServerState(ctx);
+
+	if err != nil {
+		fmt.Println(che.Running);
+	}
+
 	isRunning := true
 	state := app.CheServerState{
 		Running: &isRunning,

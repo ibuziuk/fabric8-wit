@@ -222,10 +222,12 @@ func (cs *StarterClient) StartExistingWorkspace(ctx context.Context, workspaceNa
 
 // GetCheServerState get the state of che server
 func (cs *StarterClient) GetCheServerState(ctx context.Context) (*CheServerStateResponse, error) {
+	fmt.Println("Getting Che server state");
 	req, err := http.NewRequest("GET", cs.targetURL("server"), nil)
 	if err != nil {
 		return nil, err
 	}
+
 	cs.setHeaders(ctx, req)
 
 	if log.IsDebug() {
