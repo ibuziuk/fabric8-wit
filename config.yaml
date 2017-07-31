@@ -96,13 +96,13 @@ token.privatekey : |
 
 token.publickey : |
                     -----BEGIN PUBLIC KEY-----
-                    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArlscGA2NfO4ZkGzJgZE8
-                    e/WGHCFANE28DzU1aftOssKi4jCn++umFWPDWxTwLfQdiwc8Bbhn9/8udPMXrZ84
-                    L8OgVNbDXOle37QE0+GEAX/DnzkvOg2sm7F0IzKck9YNvo3ZUYj7dyW9s2zatCwu
-                    QyUsHJmbMdwtDOueHBHwXiAiU0kprtUjNsvK4SBvascBdCmLLIWkhj2lu5S6BGrH
-                    gDDTv2JaguNwlgbHLFWU08D03j2F5Yj4TO8LexRJwCYrKp1icQrvC+WGhRAlttbx
-                    51MKRiCnqhFJ8LYtCbPt5Xm5+FR2fHFCMyCqQsScu+dwsx+mb4JGAsdVEaUdcmOF
-                    ZwIDAQAB
+                    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmCUKKr6LbO9eYKPyJB3k
+                    irzlSV8GpgmUcpTYoiDziLAxc2svPotyyUThWafEmCQ6OR46z60hZImaJcxDXyJJ
+                    RKFjIA5LGA3ERbLdUGwLmJOE1ZZtcF5+c/pWqREsi5+E5VG/WN2I2ZNCqlQ+cfCq
+                    TwuQg+7Pr1jJvxm6Xf268r25kKRKD8uc3bRFaZNSmaK+G3KcZSiFyCAPgQcQU8ZN
+                    /9bLjGC8i5DQgCU5SYjvs1SmAUpcEkyVA5IQEuks0Wg0ZCogX50Bpx7FMV+Pbh4w
+                    E8tgOr/c8CHQAIGeyzRA2bi1FOcnUeA2OEhGKVv6KxCGsGkxrGpNxDXMYTaiVK2y
+                    zwIDAQAB
                     -----END PUBLIC KEY-----
 
 #auth.notapproved.redirect : https://manage.openshift.com/openshiftio
